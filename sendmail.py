@@ -16,11 +16,12 @@ class SendMail:
 
     def __init__(self, debug_level=0, mail_type='test'):
         self.mail_type = mail_type
-        username = 'da-monitor@appchina.com'
-        password = 'yyh94great!'
+        username = 'lalala@163.com'
+        password = '123456'
         directory = os.environ.get('MassQueryPath')
         self._default_config_path = directory + '/myemail/sendmail.cfg'
-        self._smtp = smtplib.SMTP('smtp.partner.outlook.cn:587')
+        self._smtp = smtplib.SMTP('smtp.163.com:465')
+        #端口号是465/994
         #self._smtp = smtplib.SMTP('localhost')
         self._smtp.set_debuglevel(debug_level)
         self._smtp.ehlo()
@@ -38,7 +39,6 @@ class SendMail:
         self._config_from_addr = config.get(self.mail_type, 'address')
         self._config_from_name = config.get(self.mail_type, 'name')
         self.subject = config.get(self.mail_type, 'subject')
-        print self.subject
         self.toAddrs = ast.literal_eval(config.get(self.mail_type, 'mail_target'))
 
     def set_notification(self, boolvar):
@@ -46,7 +46,6 @@ class SendMail:
 
     def send_html(self, date, msgHtml, notify=False, charset='utf-8'):
         _from_addr = self._config_from_addr
-        #_from_addr = "weizhigang@appchina.com"
         _from_name = self._config_from_name
         _msg = MIMEText(msgHtml, 'html', charset)
         _msg['Message-ID'] = email.utils.make_msgid()
